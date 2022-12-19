@@ -11,8 +11,8 @@ st.session_state.refresh = 1
 if "authentication_status" not in st.session_state:
     st.session_state["authentication_status"] = None
 
-st.text_input('Login ID',key='login_id')
-st.text_input('Password (zqtc9318WlA)',key='password')
+st.text_input('User ID',key='login_id')
+st.text_input('Password',key='password')
 if st.button('Submit'):
     try:
         data_file = 'botProperties.json'

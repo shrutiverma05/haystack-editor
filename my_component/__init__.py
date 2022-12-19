@@ -131,8 +131,8 @@ if not _RELEASE:
             head1.write('File Loaded')
             indata = []
             index = set()
-            data_file = 'faq_test.csv'
-            url = 'https://novacorpweb.azurewebsites.net/haytest/'+data_file
+            data_file = 'faq_data.csv'
+            url = f'https://novacorpweb.azurewebsites.net/{st.session_state["login_id"]}/{data_file}'
             urllib.request.urlretrieve(url, data_file)
             with open(data_file, mode ='r',encoding='cp1252') as file:
                 csvFile = csv.reader(file)
@@ -184,7 +184,7 @@ if not _RELEASE:
             # force UTF-8 encoding
             ftp_server.encoding = "utf-8"
 
-            ftp_server.cwd('/site/wwwroot/haytest')
+            ftp_server.cwd(f'/site/wwwroot/{st.session_state["login_id"]}')
             filename = "faq_test.csv"
             with open(filename, "w",newline='') as csvfile:
                 csvwriter = csv.writer(csvfile) 
