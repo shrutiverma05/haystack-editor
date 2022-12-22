@@ -185,7 +185,7 @@ if not _RELEASE:
             ftp_server.encoding = "utf-8"
 
             ftp_server.cwd(f'/site/wwwroot/{st.session_state["login_id"]}')
-            filename = "faq_test.csv"
+            filename = "faq_data.csv"
             with open(filename, "w",newline='') as csvfile:
                 csvwriter = csv.writer(csvfile) 
                 csvwriter.writerow(fields) 
@@ -246,26 +246,54 @@ if not _RELEASE:
                 else:
                     pass
                 
-                try:
-                    ans=json.loads(st.session_state[f"ans_{i}"])
-                    num_clicks = my_component(botProperties,ans, key='Foo '+str(i+1)+' Answer')
-                    k = "editcard"
-                    adata = json.dumps(ans)
-                    if st.button(f"{i+1}.Edit"):
-                        st_javascript(f"sessionStorage.setItem('{k}', JSON.stringify({adata}));")
-                        st.session_state["editcard"] = f"ans_{i}"
-                    else:
-                        pass
-                    if st.button(f"{i+1}.Delete card"):
-                        st.session_state.refresh=1
-                        st.session_state[f"ans_{i}"] = ''
-                    else:
-                        pass
-                except:
-                    st.text_area(
-                        "Answer",
-                        key=f"ans_{i}",
-                        )  
+                if st.session_state[f"ans_{i}"].find('/??/') == -1:
+                    try:
+                        ans=json.loads(st.session_state[f"ans_{i}"])
+                        num_clicks = my_component(botProperties,ans, key='Foo '+str(i+1)+' Answer')
+                        k = "editcard"
+                        adata = json.dumps(ans)
+                        if st.button(f"{i+1}.Edit"):
+                            st_javascript(f"sessionStorage.setItem('{k}', JSON.stringify({adata}));")
+                            st.session_state["editcard"] = f"ans_{i}"
+                        else:
+                            pass
+                        if st.button(f"{i+1}.Delete card"):
+                            st.session_state.refresh=1
+                            st.session_state[f"ans_{i}"] = ''
+                        else:
+                            pass
+                    except:
+                        st.text_area(
+                            "Answer",
+                            key=f"ans_{i}",
+                            ) 
+                else:
+                    carousel = [0]
+                    for j in range(len(st.session_state[f"ans_{i}"])-4):
+                        if st.session_state[f"ans_{i}"][j:j+4] == '/??/':
+                            carousel.append(j)
+                    
+                    for j in range(len(carousel)-1):
+                        if f"card_{i}_{j}" not in st.session_state:
+                            st.session_state[f"card_{i}_{j}"] = ''
+                        try:
+                            ans=json.loads(st.session_state[f"card_{i}_{j}"])
+                            num_clicks = my_component(botProperties,ans, key='Foo '+str(i+1)+str(j+1)+' Answer')
+                            k = "editcard"
+                            adata = json.dumps(ans)
+                            if st.button(f"{i+1}.{j+1}.Edit"):
+                                st_javascript(f"sessionStorage.setItem('{k}', JSON.stringify({adata}));")
+                                st.session_state["editcard"] = f"card_{i}_{j}"
+                            else:
+                                pass
+                            if st.button(f"{i+1}.{j+1}.Delete card"):
+                                st.session_state.refresh=1
+                                st.session_state[f"card_{i}_{j}"] = ''
+                            else:
+                                pass
+                        except:
+                            st.session_state[f"card_{i}_{j}"] = st.session_state[f"ans_{i}"][carousel[j] if j == 0 else carousel[j]+4 :carousel[j+1]]
+                        
         if st.session_state.refresh==1:
             st.session_state.refresh = 0
             time.sleep(3)
@@ -274,4 +302,3 @@ if not _RELEASE:
         st.error('Username/password is incorrect')
     elif st.session_state["authentication_status"] == None:
         st.warning('Please enter your username and password')
-    #print(st.session_state)
