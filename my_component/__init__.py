@@ -99,7 +99,7 @@ if not _RELEASE:
         data_file = 'botProperties.json'
         url = f'https://novacorpweb.azurewebsites.net/{st.session_state["login_id"]}/{data_file}'
         urllib.request.urlretrieve(url, data_file)
-        with open(data_file, encoding='utf-8') as botp:
+        with open(data_file, encoding='cp1252') as botp:
             botProperties = json.load(botp)
         # num_click = _component_func(botProp=botProperties, key=None, default=0)
         # from PIL import Image

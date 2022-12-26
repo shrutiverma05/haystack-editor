@@ -18,7 +18,7 @@ if st.button('Submit'):
         data_file = 'botProperties.json'
         url = f'https://novacorpweb.azurewebsites.net/{st.session_state["login_id"]}/{data_file}'
         urllib.request.urlretrieve(url, data_file)
-        with open(data_file, encoding='utf-8') as f:
+        with open(data_file, encoding='cp1252') as f:
             data = json.load(f)
             if data['generalSettings']['botSecret'][:11] == st.session_state.password:
                 st.success('Login Sucessful')
