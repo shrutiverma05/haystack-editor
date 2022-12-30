@@ -6,7 +6,7 @@ services:
       - '443:443'
       - '80:80'
     links:
-      #- node
+      - node
       - streamlit
     restart: always
     environment:
@@ -19,38 +19,33 @@ services:
       - test-network
 
    streamlit:
+    restart: always
+    container_name: streamlit-data
     build: ./
-    #command: "streamlit run my_component/__init__.py"
     ports:
       - "8501:8501"
-    volumes:
-      - myapp:/home/novaadmin/haystack-editor/my_component
+    networks:
+      - test-network
+      
+   node:
+    restart: always
+    container_name: node-data
+    build: ./
+    ports:
+     - "8051:8051"
+    networks:
+     - test-network
 
   #  streamlit:
-  #   restart: always
-  #   container_name: streamlit-data
   #   build: ./
+  #   #command: "streamlit run my_component/__init__.py"
+  #   ports:
+  #     - "8501:8501"
   #   volumes:
-  #    - ./__init__.py:/app/__init__.py
-  #    #- ./models/:/app/models/
-  #   ports:
-  #    - "8501:8501"
-  #   networks:
-  #    - test-network
-
-  #  node:
-  #   restart: always
-  #   container_name: node-data
-  #   build: ./
-  #   ports:
-  #    - "8051:8051"
-  #   networks:
-  #    - test-network
-
+  #     - myapp:/home/novaadmin/haystack-editor/my_component
 networks:
   test-network:
 
 volumes:
   https-portal-data:
-  myapp:
 
