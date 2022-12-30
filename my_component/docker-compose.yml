@@ -1,0 +1,42 @@
+version: '3'
+services:
+   https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '443:443'
+      - '80:80'
+    links:
+      - streamlit
+      - node
+    restart: always
+    environment:
+      DOMAINS: 'uat.kb.novacept.io -> http://streamlit:8501'
+      #STAGE: 'production' # Don't use production until staging works
+      # FORCE_RENEW: 'true'
+    volumes: 
+      - https-portal-data:/var/lib/https-portal
+    networks:
+       - test-network
+
+   streamlit:
+    restart: always
+    build: ./
+    ports:
+     - "8501:8501"
+    networks:
+     - test-network
+
+   node:
+    restart: always
+    build: ./
+    ports:
+     - "8051:8051"
+    networks:
+     - test-network
+
+networks:
+  test-network:
+
+volumes:
+  https-portal-data:
+
