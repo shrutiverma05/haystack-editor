@@ -27,6 +27,7 @@ services:
       - "8501:8501"
     networks:
       - test-network
+    
 
    node:
     restart: always
@@ -37,6 +38,9 @@ services:
     networks:
      - test-network
     command: ["npm", "start"]
+    volumes:
+      - ./:/app
+      - /app/frontend
 
   #  streamlit:
   #   build: ./
