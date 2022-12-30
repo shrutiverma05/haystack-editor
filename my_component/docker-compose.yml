@@ -26,11 +26,11 @@ services:
       - "8501:8501"
     networks:
       - test-network
-      
+
    node:
     restart: always
     container_name: node-data
-    build: ./
+    build: ./frontend
     ports:
      - "8051:8051"
     networks:
