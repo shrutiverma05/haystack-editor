@@ -11,7 +11,7 @@ services:
     restart: always
     environment:
       DOMAINS: 'uat.kb.novacept.io -> http://streamlit:8501'
-      #STAGE: 'production' # Don't use production until staging works
+      STAGE: 'production' # Don't use production until staging works
       # FORCE_RENEW: 'true'
     volumes: 
       - https-portal-data:/var/lib/https-portal
@@ -30,7 +30,7 @@ services:
    node:
     restart: always
     container_name: node-data
-    build: ./frontend
+    build: ./
     ports:
      - "8051:8051"
     networks:
