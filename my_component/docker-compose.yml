@@ -6,8 +6,8 @@ services:
       - '443:443'
       - '80:80'
     links:
-      - streamlit
       - node
+      - streamlit
     restart: always
     environment:
       DOMAINS: 'uat.kb.novacept.io -> http://streamlit:8501'
@@ -16,12 +16,12 @@ services:
     volumes: 
       - https-portal-data:/var/lib/https-portal
     networks:
-       - test-network
+      - test-network
 
    streamlit:
     restart: always
     container_name: streamlit-data
-    build: ./__init__.py
+    build: ./
     ports:
      - "8501:8501"
     networks:
