@@ -19,25 +19,33 @@ services:
       - test-network
 
    streamlit:
-    restart: always
-    container_name: streamlit-data
-    build: ./
+    build: .
+    command: "streamlit run src/main.py"
+    ports:
+      - "8501:8501"
     volumes:
-     - ./__init__.py:/app/__init__.py
-     #- ./models/:/app/models/
-    ports:
-     - "8501:8501"
-    networks:
-     - test-network
+      - "./src:/usr/src/app/src"
 
-   node:
-    restart: always
-    container_name: node-data
-    build: ./
-    ports:
-     - "8051:8051"
-    networks:
-     - test-network
+  #  streamlit:
+  #   restart: always
+  #   container_name: streamlit-data
+  #   build: ./
+  #   volumes:
+  #    - ./__init__.py:/app/__init__.py
+  #    #- ./models/:/app/models/
+  #   ports:
+  #    - "8501:8501"
+  #   networks:
+  #    - test-network
+
+  #  node:
+  #   restart: always
+  #   container_name: node-data
+  #   build: ./
+  #   ports:
+  #    - "8051:8051"
+  #   networks:
+  #    - test-network
 
 networks:
   test-network:
