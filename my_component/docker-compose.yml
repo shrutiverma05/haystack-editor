@@ -13,6 +13,7 @@ services:
       DOMAINS: 'uat.kb.novacept.io -> http://streamlit:8501'
       STAGE: 'production' # Don't use production until staging works
       # FORCE_RENEW: 'true'
+      WEBSOCKET: 'true'
     volumes: 
       - https-portal-data:/var/lib/https-portal
     networks:
