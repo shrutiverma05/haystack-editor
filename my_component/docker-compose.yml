@@ -20,7 +20,8 @@ services:
 
    streamlit:
     restart: always
-    build: ./
+    container_name: streamlit-data
+    build: ./__init__.py
     ports:
      - "8501:8501"
     networks:
@@ -28,6 +29,7 @@ services:
 
    node:
     restart: always
+    container_name: node-data
     build: ./
     ports:
      - "8051:8051"
