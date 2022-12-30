@@ -38,9 +38,9 @@ services:
     networks:
      - test-network
     command: ["npm", "start"]
-    volumes:
-      - ./:/app
-      - /app/frontend
+    # volumes:
+    #   - /app/frontend
+    tty: true
 
   #  streamlit:
   #   build: ./
