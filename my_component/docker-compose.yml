@@ -19,12 +19,12 @@ services:
       - test-network
 
    streamlit:
-    build: .
-    command: "streamlit run my_component/__init__.py"
+    build: ./
+    #command: "streamlit run my_component/__init__.py"
     ports:
       - "8501:8501"
     volumes:
-      - "./my_component:my_component/app/my_component"
+      - myapp:/home/novaadmin/haystack-editor/my_component
 
   #  streamlit:
   #   restart: always
@@ -52,4 +52,5 @@ networks:
 
 volumes:
   https-portal-data:
+  myapp:
 
